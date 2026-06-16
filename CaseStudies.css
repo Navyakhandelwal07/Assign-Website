@@ -1,0 +1,374 @@
+/* =============================================
+   CaseStudies.css  —  all classes prefixed cs-
+   ============================================= */
+
+:root {
+    --cs-bg-main:       #FFFFFF;
+    --cs-bg-card:       #F4F8FF;
+    --cs-text-main:     #14375B;
+    --cs-text-muted:    #5F7C99;
+    --cs-accent-teal:   #2A9D8F;
+    --cs-accent-storm:  #3A6EA5;
+    --cs-accent-steel:  #5B7D9A;
+    --cs-accent-navy:   #14375B;
+    --cs-easing:        cubic-bezier(0.16, 1, 0.3, 1);
+    --cs-slow:          1s   var(--cs-easing);
+    --cs-fast:          0.5s var(--cs-easing);
+}
+
+/* ==============================================
+   SHARED — used by both desktop and mobile
+   ============================================== */
+
+.cs-container   { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 2rem; }
+.cs-text-center { text-align: center; }
+.cs-mt-4        { margin-top: 1.5rem; }
+
+/* ── Hero (shared) ── */
+.cs-hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 6rem 0 3rem;
+    background: var(--cs-bg-main);
+}
+
+.cs-hero-ticker {
+    position: absolute;
+    top: 10%; left: 6%; right: -10%;
+    pointer-events: none;
+    white-space: nowrap;
+    font-weight: 900;
+    color: rgba(20, 55, 91, 0.04);
+    font-size: clamp(6rem, 18vw, 18rem);
+    animation: cs-ticker 60s linear infinite;
+}
+@keyframes cs-ticker {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-40%); }
+}
+
+.cs-outline-text {
+    font-size: clamp(5rem, 10vw, 9rem);
+    font-weight: 900;
+    line-height: 0.92;
+    text-transform: uppercase;
+    color: var(--cs-accent-navy);
+    text-shadow: 0 18px 40px rgba(20, 55, 91, 0.08);
+    margin: 0;
+}
+
+/* Project tags (shared) */
+.cs-project-tags {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+.cs-project-tags span {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--cs-accent-navy);
+    background: rgba(86, 124, 219, 0.10);
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(86, 124, 219, 0.28);
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(86, 124, 219, 0.06);
+}
+
+/* Detail rows (shared) */
+.cs-project-details { display: flex; flex-direction: column; }
+.cs-detail-row {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid rgba(86, 124, 219, 0.08);
+}
+.cs-detail-row:last-child { border-bottom: none; }
+
+.cs-project-details .cs-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: var(--cs-accent-storm);
+    margin-bottom: 0.35rem;
+    text-transform: uppercase;
+    display: block;
+}
+.cs-project-details .cs-text {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--cs-text-main);
+    font-weight: 400;
+    word-break: break-word;
+    hyphens: auto;
+    margin: 0;
+}
+
+/* Stats strip (shared) */
+.cs-big-stats-section {
+    padding: 5rem 0 4rem;
+    margin-top: 0;
+    background: var(--cs-bg-main);
+    border-top: 1px solid rgba(86, 124, 219, 0.1);
+}
+.cs-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+.cs-big-stat h2 {
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 900;
+    color: var(--cs-text-main);
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.02em;
+}
+.cs-big-stat p {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--cs-text-muted);
+    text-transform: uppercase;
+}
+
+/* Project number / category labels (shared) */
+.cs-project-num {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--cs-text-muted);
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+.cs-project-category {
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.18em;
+    color: var(--cs-accent-storm);
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    display: block;
+}
+
+
+/* ==============================================
+   DESKTOP LAYOUT  (≥ 1024px)
+   Two-column per row: left = content, right = portrait video
+   Static, no sticky panels, no scroll animations
+   ============================================== */
+
+@media (min-width: 1024px) {
+
+    /* Hide mobile-only sections */
+    .cs-mobile-section { display: none !important; }
+
+    /* ── Desktop case study list wrapper ── */
+    .cs-desktop-list {
+        padding: 3rem 0 1rem;
+        background: var(--cs-bg-main);
+    }
+
+    /* ── Per-entry: two-column grid ── */
+    .cs-desktop-entry {
+        display: grid;
+        grid-template-columns: 1fr 340px;
+        gap: 4rem;
+        align-items: start;
+        max-width: 1200px;
+        margin: 0 auto 0;
+        padding: 4rem 2rem;
+        border-bottom: 1px solid rgba(86, 124, 219, 0.10);
+    }
+    .cs-desktop-entry:last-child {
+        border-bottom: none;
+    }
+
+    /* ── LEFT: content column ── */
+    .cs-desktop-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Eyebrow row */
+    .cs-desktop-eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 0.75rem;
+    }
+
+    /* Heading */
+    .cs-desktop-content h2 {
+        font-size: clamp(1.9rem, 2.8vw, 3rem);
+        font-weight: 900;
+        letter-spacing: -0.04em;
+        color: var(--cs-text-main);
+        line-height: 1.06;
+        margin: 0 0 1.25rem;
+    }
+
+    /* Key stats row */
+    .cs-desktop-stats {
+        display: flex;
+        gap: 2.5rem;
+        margin-bottom: 1.75rem;
+    }
+    .cs-desktop-stat-item {
+        display: flex;
+        flex-direction: column;
+    }
+    .cs-desktop-stat-item strong {
+        font-size: clamp(1.4rem, 2vw, 2rem);
+        font-weight: 900;
+        color: var(--cs-accent-storm);
+        letter-spacing: -0.02em;
+        line-height: 1;
+    }
+    .cs-desktop-stat-item span {
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.14em;
+        color: var(--cs-text-muted);
+        text-transform: uppercase;
+        margin-top: 0.25rem;
+    }
+
+    /* ── RIGHT: portrait video column ── */
+    .cs-desktop-video-col {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        position: sticky;
+        top: 2rem;          /* sticks while content scrolls past */
+    }
+
+    .cs-desktop-video-wrap {
+        width: 100%;
+        max-width: 280px;
+        aspect-ratio: 9 / 16;
+        border-radius: 20px;
+        overflow: hidden;
+        background: #000;
+        box-shadow: 0 24px 64px rgba(20, 55, 91, 0.14);
+        border: 1px solid rgba(86, 124, 219, 0.12);
+    }
+
+    .cs-desktop-video-wrap video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    /* Reveal utility — simple fade, no transform */
+    .cs-reveal { opacity: 0; transition: opacity 0.6s ease; }
+    .cs-reveal.cs-is-visible { opacity: 1; }
+    .cs-fade-up { transform: none; }
+
+    /* Hero ticker size */
+    .cs-hero-ticker {
+        font-size: clamp(6rem, 18vw, 18rem);
+    }
+
+    /* Stats strip spacing */
+    .cs-big-stats-section {
+        padding: 4rem 0;
+        margin-top: 0;
+    }
+}
+
+/* Fine-tune desktop breakpoints */
+@media (max-width: 1300px) and (min-width: 1024px) {
+    .cs-desktop-entry {
+        grid-template-columns: 1fr 280px;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 1100px) and (min-width: 1024px) {
+    .cs-desktop-entry {
+        grid-template-columns: 1fr 240px;
+        gap: 2.5rem;
+        padding: 3rem 2rem;
+    }
+    .cs-desktop-video-wrap { max-width: 220px; }
+}
+
+
+/* ==============================================
+   MOBILE LAYOUT  (≤ 1023px)
+   Exact same as original — untouched
+   ============================================== */
+
+@media (max-width: 1023px) {
+
+    /* Show mobile sections, hide desktop list */
+    .cs-desktop-list { display: none !important; }
+
+    .cs-mobile-section {
+        display: block;
+        padding: 2rem 0;
+        border-bottom: 1px solid rgba(86,124,219,0.06);
+        background: var(--cs-bg-main);
+    }
+    .cs-mobile-section .cs-container { padding: 0 1rem; }
+    .cs-mobile-content { padding-bottom: 1rem; }
+    .cs-mobile-media { margin-top: 12px; }
+    .cs-mobile-media video {
+        width: 100%; height: auto;
+        display: block;
+        border-radius: 14px;
+        border: 1px solid rgba(86,124,219,0.08);
+    }
+    .cs-mobile-content h2 { font-size: 1.6rem; margin-bottom: 0.75rem; }
+    .cs-mobile-content .cs-project-tags span { padding: 0.45rem 0.9rem; font-size: 0.75rem; }
+    .cs-project-details .cs-text { font-size: 1rem; line-height: 1.6; }
+
+    /* Hide ALL desktop-only structural elements */
+    .cs-timeline-tracker,
+    .cs-gallery-nav,
+    .cs-sticky-left-panel,
+    .cs-sticky-track-container,
+    .cs-sticky-layout-wrapper,
+    .cs-scroll-right-gallery,
+    .cs-desktop-list { display: none !important; }
+
+    /* Stats strip overrides for mobile */
+    .cs-big-stats-section {
+        display: block !important;
+        opacity: 1 !important;
+        transform: none !important;
+        padding: 2.5rem 0 2rem;
+        margin-top: 1.5rem;
+        background: var(--cs-bg-main);
+        border-top: 1px solid rgba(86,124,219,0.06);
+    }
+    .cs-big-stats-section.cs-reveal,
+    .cs-big-stats-section.cs-fade-up {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+    .cs-stats-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Hero tweaks */
+    .cs-hero { padding-top: 8rem; }
+    .cs-hero-ticker {
+        top: 50%;
+        left: 6%;
+        font-size: clamp(4rem, 14vw, 12rem);
+    }
+    .cs-outline-text { font-size: clamp(3rem, 15vw, 5rem); }
+}
+
+/* Narrow mobile */
+@media (max-width: 480px) {
+    .cs-outline-text { font-size: clamp(3rem, 15vw, 5rem); }
+    .cs-stats-grid   { grid-template-columns: 1fr 1fr; gap: 1rem; }
+}
